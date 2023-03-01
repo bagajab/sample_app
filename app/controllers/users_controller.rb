@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      reset_session # session fixation
+      log_in(@user)
+      
       flash[:success] = 'Welcome to the Sample App Developed By Bagaja Birhanu!'
       redirect_to @user
     else
